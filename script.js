@@ -24,8 +24,9 @@ var KONFIG = {
 
   // Satu item satu paragraf. Ini masih pesan sementara.
   PESAN: [
-    "Selamat ulang tahun yang ke-23, Dita. Terima kasih sudah menjadi tempat paling nyaman untuk pulang, di hari yang ramai maupun yang melelahkan.",
-    "Semoga tahun ini membawa lebih banyak tawa, kabar baik, dan kesempatan untuk semua rencana yang sedang kamu jaga pelan-pelan. Apa pun yang kamu kejar, aku ada di sampingmu."
+    "Selamat ulang tahun yang ke 23, Dita Ristyani. Terima kasih sudah menjadi tempat paling nyaman untuk pulang, paling nyaman untuk berkabar, paling diandalkan dalam setiap penentuan dalam setiap keadaan.",
+    "Semoga di usia 23 th ini membawa lebih banyak tawa, kabar baik, dan kesempatan untuk semua rencana yang sedang kamu jaga pelan-pelan. Apa pun yang kamu kejar, cinta, jiwa, dan ragaku ku ada di sampingmu. Ingat itu ya tuyycan:)",
+    "Maaf atas segala dosa yang kuperbuat dan menyakitimu selama ini. Terimakasih atas kesempatan yang telah diberikan kembali. Akan ku jaga dirimu, akan ku pegang janjiku padamu."
   ],
 
   // Kotak balasan dan tombol WhatsApp di bawah pesan.
