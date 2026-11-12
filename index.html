@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Untuk Dita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <canvas id="konfeti" aria-hidden="true"></canvas>
+  <div id="balon" aria-hidden="true"></div>
+  <div class="kilat" id="kilat" aria-hidden="true"></div>
+
+  <!-- Latar foto, berdiri sendiri di belakang halaman supaya tidak ikut tergulung -->
+  <div class="dasar" id="dasar" aria-hidden="true">
+    <div class="latar" id="latar"></div>
+    <div class="tirai"></div>
+  </div>
+
+  <!-- Halaman 1: gerbang kode -->
+  <section class="halaman aktif" id="halaman-gerbang" data-halaman="gerbang">
+    <div class="gerbang">
+      <p class="kecil">Untuk Dita Ristyani</p>
+      <h1>Ada kejutan kecil untukmu.</h1>
+      <p class="isi">Jawab tantangan ini sampai selesai untuk membuka.</p>
+
+      <div class="arena" id="arena">
+        <form class="form-kode datang" id="form-kode" data-posisi="0" autocomplete="off">
+          <label class="pertanyaan" id="pertanyaan" for="kode"></label>
+          <input class="isian" id="kode" name="kode" type="text" inputmode="text" placeholder="Tulis jawabanmu" autocapitalize="off" spellcheck="false">
+          <p class="galat" id="galat" role="alert" hidden></p>
+          <button type="submit" class="tombol">Jawab</button>
+        </form>
+      </div>
+
+      <p class="petunjuk" id="petunjuk"></p>
+    </div>
+  </section>
+
+  <!-- Halaman 2: kotak hadiah, ucapan, kue, lalu surat -->
+  <section class="halaman" id="halaman-ucapan" data-halaman="ucapan">
+    <main class="ucapan">
+
+      <button type="button" class="kado" id="kado" aria-label="Buka kotak hadiah">
+        <span class="kecil">Untuk Dita Ristyani</span>
+        <span class="hadiah" id="hadiah" aria-hidden="true">
+          <svg class="hd-badan" viewBox="0 0 200 140" focusable="false">
+            <rect class="k-badan" x="14" y="0" width="172" height="140" rx="10"/>
+            <g class="k-titik"><circle cx="40" cy="38" r="4"/><circle cx="62" cy="88" r="3"/><circle cx="36" cy="112" r="3"/><circle cx="152" cy="46" r="4"/><circle cx="166" cy="98" r="3"/><circle cx="140" cy="122" r="3"/></g>
+            <rect class="k-pita" x="88" y="0" width="24" height="140"/>
+          </svg>
+          <svg class="hd-tutup" viewBox="0 0 200 88" focusable="false">
+            <rect class="k-tutup" x="4" y="44" width="192" height="40" rx="9"/>
+            <rect class="k-pita" x="88" y="44" width="24" height="40"/>
+            <path class="k-simpul" d="M100 42 C 78 40, 40 34, 46 16 C 52 -2, 84 8, 100 42 Z"/>
+            <path class="k-simpul" d="M100 42 C 122 40, 160 34, 154 16 C 148 -2, 116 8, 100 42 Z"/>
+            <rect class="k-simpul" x="90" y="30" width="20" height="18" rx="6"/>
+          </svg>
+        </span>
+        <span class="ajakan" id="ajakan"></span>
+      </button>
+
+      <!-- Muncul setelah kotak meledak -->
+      <div class="ucapan-isi" id="ucapan-isi" hidden>
+        <h1>
+          <span class="judul-baris">Selamat ulang tahun</span>
+          <span class="nama-dita">Dita Ristyani</span>
+        </h1>
+        <div class="angka" aria-label="ke-23">
+          <span class="topi" aria-hidden="true"><span class="kue">🎂</span></span>23
+        </div>
+
+        <!-- Kue ulang tahun. Ketuk untuk meniup lilin, ketuk lagi untuk memotong -->
+        <button type="button" class="pesta" id="pesta" aria-label="Tiup lilin dan potong kue">
+          <svg class="kue-svg" viewBox="0 0 240 210" focusable="false" aria-hidden="true">
+            <defs>
+              <clipPath id="potong-kiri"><rect x="0" y="0" width="160" height="210"/></clipPath>
+              <clipPath id="potong-kanan"><rect x="160" y="0" width="80" height="210"/></clipPath>
+              <g id="kue-badan">
+                <rect x="22" y="120" width="196" height="68" rx="10" fill="#f98bb2"/>
+                <rect x="16" y="112" width="208" height="18" rx="9" fill="#fff"/>
+                <rect x="52" y="78" width="136" height="44" rx="10" fill="#ee6a9b"/>
+                <rect x="46" y="70" width="148" height="16" rx="8" fill="#fff"/>
+                <g fill="#fff" opacity=".8"><circle cx="48" cy="150" r="4"/><circle cx="84" cy="166" r="3"/><circle cx="120" cy="152" r="4"/><circle cx="156" cy="168" r="3"/><circle cx="192" cy="150" r="4"/></g>
+                <g fill="#c42f6c"><circle cx="70" cy="104" r="5"/><circle cx="120" cy="100" r="5"/><circle cx="170" cy="104" r="5"/></g>
+              </g>
+            </defs>
+            <ellipse cx="120" cy="190" rx="112" ry="14" fill="#fff" stroke="#f2a6c0" stroke-width="2"/>
+            <use href="#kue-badan" clip-path="url(#potong-kiri)"/>
+            <g class="irisan"><use href="#kue-badan" clip-path="url(#potong-kanan)"/></g>
+            <g class="lilin">
+              <rect x="88" y="42" width="8" height="30" rx="2" fill="#fff"/><rect x="88" y="50" width="8" height="5" fill="#ff9fc0"/><rect x="88" y="62" width="8" height="5" fill="#ff9fc0"/>
+              <rect x="116" y="38" width="8" height="34" rx="2" fill="#fff"/><rect x="116" y="47" width="8" height="5" fill="#ee6a9b"/><rect x="116" y="60" width="8" height="5" fill="#ee6a9b"/>
+              <rect x="144" y="42" width="8" height="30" rx="2" fill="#fff"/><rect x="144" y="50" width="8" height="5" fill="#ff9fc0"/><rect x="144" y="62" width="8" height="5" fill="#ff9fc0"/>
+            </g>
+            <g class="api-grup">
+              <g class="api" style="--t:0s"><path d="M92 40 C 99 30 100 22 92 12 C 84 22 85 30 92 40 Z" fill="#ffb703"/><path d="M92 38 C 96 32 96 27 92 22 C 88 27 88 32 92 38 Z" fill="#fff3b0"/></g>
+              <g class="api" style="--t:-.2s"><path d="M120 36 C 127 26 128 18 120 8 C 112 18 113 26 120 36 Z" fill="#ffb703"/><path d="M120 34 C 124 28 124 23 120 18 C 116 23 116 28 120 34 Z" fill="#fff3b0"/></g>
+              <g class="api" style="--t:-.4s"><path d="M148 40 C 155 30 156 22 148 12 C 140 22 141 30 148 40 Z" fill="#ffb703"/><path d="M148 38 C 152 32 152 27 148 22 C 144 27 144 32 148 38 Z" fill="#fff3b0"/></g>
+            </g>
+            <g class="asap" fill="#fff"><circle cx="92" cy="34" r="5"/><circle cx="120" cy="30" r="6"/><circle cx="148" cy="34" r="5"/></g>
+            <g class="pisau"><rect x="157" y="-70" width="6" height="150" rx="3" fill="#e9e6f0" stroke="#bdb7cc" stroke-width="1"/><rect x="153" y="-110" width="14" height="44" rx="6" fill="#c42f6c"/></g>
+          </svg>
+          <span class="ajakan" id="ajakan-kue"></span>
+        </button>
+
+        <!-- Pesan berbentuk surat, muncul setelah kue dipotong -->
+        <section class="kartu pesan surat" id="kartu-pesan" aria-labelledby="salam" hidden>
+          <p class="tempat" id="tempat-tanggal" hidden></p>
+          <h2 id="salam"></h2>
+          <div id="isi-pesan"></div>
+          <div class="penutup">
+            <p class="tutup" id="penutup"></p>
+            <img class="ttd" id="ttd" alt="Tanda tangan" hidden>
+            <p class="nama" id="pengirim"></p>
+          </div>
+          <div class="balas">
+            <label class="kecil" for="balasan" id="judul-balasan"></label>
+            <textarea class="isian" id="balasan" rows="3" maxlength="500" spellcheck="true"></textarea>
+            <a class="tombol wa" id="tombol-wa" href="#" target="_blank" rel="noopener"></a>
+          </div>
+        </section>
+
+        <button type="button" class="tombol" id="rayakan" hidden>Rayakan lagi</button>
+      </div>
+    </main>
+  </section>
+
+  <!-- Musik latar. File dan volumenya diatur di script.js -->
+  <audio id="musik" loop preload="auto"></audio>
+  <button type="button" class="tombol-musik" id="tombol-musik" aria-label="Putar musik" hidden>
+    <svg class="ikon-jeda" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>
+    <svg class="ikon-putar" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
