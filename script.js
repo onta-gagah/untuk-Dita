@@ -37,6 +37,14 @@ var KONFIG = {
   PLACEHOLDER_BALASAN: "Tulis di sini, boleh dikosongkan",
   TEKS_TOMBOL_WA: "Kirim ke Brian lewat WhatsApp",
 
+  // Video. Taruh file mp4 sejajar dengan index.html. Tombolnya hanya muncul kalau file videonya ada.
+  // Kosongkan VIDEO ("") kalau tidak mau ada video.
+  VIDEO: "video.mp4",
+  TEKS_TOMBOL_VIDEO: "Ada satu hal lagi untukmu",
+  KECIL_VIDEO: "Untuk Dita",
+  JUDUL_VIDEO: "Video dari Brian",
+  TEKS_KEMBALI: "Kembali ke surat",
+
   // Foto latar. Taruh di folder foto dengan nama 1, 2, 3 dan seterusnya.
   // Ekstensi jpg, jpeg, png, dan webp dikenali otomatis. Penomoran harus urut tanpa lompat.
   FOLDER_FOTO: "foto",
@@ -142,7 +150,7 @@ var KONFIG = {
     // Musik mulai pada sentuhan pertama, dan berhenti menunggu sentuhan setelah benar-benar bunyi.
     var pemicu = ["click", "touchend", "keydown"];
     var mulaiPertama = function (e) {
-      if (tombolMusik.contains(e.target)) return;
+      if (tombolMusik.contains(e.target) || document.body.classList.contains("di-video")) return;
       if (dijedaManual || !musik.paused) return;
       mainkan();
     };
@@ -159,6 +167,48 @@ var KONFIG = {
       else { dijedaManual = true; musik.pause(); }
     });
   }
+
+  /* ---------- video ---------- */
+  var video = $("video");
+  var tombolVideo = $("tombol-video");
+  var musikSebelumVideo = false;
+  var gulirSurat = 0;
+
+  if (KONFIG.VIDEO) {
+    $("kecil-video").textContent = KONFIG.KECIL_VIDEO;
+    $("judul-video").textContent = KONFIG.JUDUL_VIDEO;
+    $("kembali-video").textContent = KONFIG.TEKS_KEMBALI;
+    tombolVideo.textContent = KONFIG.TEKS_TOMBOL_VIDEO;
+    // Tombol selalu muncul kalau VIDEO diisi. Kalau file tidak ada atau formatnya tidak bisa
+    // diputar, pesan penjelasan tampil di halaman video.
+    tombolVideo.hidden = false;
+    var galatVideo = document.createElement("p");
+    galatVideo.className = "galat";
+    galatVideo.hidden = true;
+    galatVideo.textContent = "Videonya belum bisa dimuat. Pastikan file " + KONFIG.VIDEO + " ada dan berformat MP4 H.264.";
+    video.parentNode.insertBefore(galatVideo, video.nextSibling);
+    video.addEventListener("error", function () { galatVideo.hidden = false; });
+    video.addEventListener("loadeddata", function () { galatVideo.hidden = true; });
+    video.src = KONFIG.VIDEO;
+  }
+
+  tombolVideo.addEventListener("click", function () {
+    gulirSurat = $("halaman-ucapan").scrollTop;
+    musikSebelumVideo = !!(KONFIG.MUSIK && !musik.paused);
+    if (musikSebelumVideo) musik.pause();
+    $("balon").innerHTML = "";   // balon yang masih terbang tidak boleh menutupi video
+    document.body.classList.add("di-video");
+    pindah("video");
+  });
+
+  $("kembali-video").addEventListener("click", function () {
+    video.pause();
+    document.body.classList.remove("di-video");
+    pindah("ucapan");
+    $("halaman-ucapan").scrollTop = gulirSurat;
+    if (musikSebelumVideo && !dijedaManual) mainkan();
+    musikSebelumVideo = false;
+  });
 
   /* ---------- pindah halaman ---------- */
   function pindah(id) {
