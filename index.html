@@ -28,6 +28,7 @@
       <h1>Ada kejutan kecil untukmu.</h1>
       <p class="isi">Jawab tantangan ini sampai selesai untuk membuka.</p>
 
+      <!-- Pertanyaan dan form jawaban satu kartu, berpindah tempat di area ini setiap kali jawaban benar -->
       <div class="arena" id="arena">
         <form class="form-kode datang" id="form-kode" data-posisi="0" autocomplete="off">
           <label class="pertanyaan" id="pertanyaan" for="kode"></label>
@@ -41,10 +42,11 @@
     </div>
   </section>
 
-  <!-- Halaman 2: kotak hadiah, ucapan, kue, lalu surat -->
+  <!-- Halaman 2: kotak hadiah, lalu ucapan -->
   <section class="halaman" id="halaman-ucapan" data-halaman="ucapan">
     <main class="ucapan">
 
+      <!-- Kotak hadiah. Diketuk, bergetar, lalu meledak -->
       <button type="button" class="kado" id="kado" aria-label="Buka kotak hadiah">
         <span class="kecil">Untuk Dita Ristyani</span>
         <span class="hadiah" id="hadiah" aria-hidden="true">
@@ -122,12 +124,23 @@
             <label class="kecil" for="balasan" id="judul-balasan"></label>
             <textarea class="isian" id="balasan" rows="3" maxlength="500" spellcheck="true"></textarea>
             <a class="tombol wa" id="tombol-wa" href="#" target="_blank" rel="noopener"></a>
+            <button type="button" class="tombol sekunder" id="tombol-video" hidden></button>
           </div>
         </section>
 
         <button type="button" class="tombol" id="rayakan" hidden>Rayakan lagi</button>
       </div>
     </main>
+  </section>
+
+  <!-- Halaman 3: video -->
+  <section class="halaman" id="halaman-video" data-halaman="video">
+    <div class="ruang-video">
+      <p class="kecil" id="kecil-video"></p>
+      <h2 id="judul-video"></h2>
+      <video id="video" controls playsinline preload="metadata"></video>
+      <button type="button" class="tombol sekunder" id="kembali-video">Kembali ke surat</button>
+    </div>
   </section>
 
   <!-- Musik latar. File dan volumenya diatur di script.js -->
