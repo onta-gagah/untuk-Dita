@@ -25,7 +25,7 @@ var KONFIG = {
   // Satu item satu paragraf. Ini masih pesan sementara.
   PESAN: [
     "Selamat ulang tahun yang ke 23, Dita Ristyani. Terima kasih sudah menjadi tempat paling nyaman untuk pulang, paling nyaman untuk berkabar, paling diandalkan dalam setiap penentuan dalam setiap keadaan.",
-    "Semoga di usia 23 th ini membawa lebih banyak tawa, kabar baik, dan kesempatan untuk semua rencana yang sedang kamu jaga pelan-pelan. Apa pun yang kamu kejar, cinta, jiwa, dan ragaku ku ada di sampingmu. Ingat itu ya tuyycan:)",
+    "Semoga di usia 23 th ini membawa lebih banyak tawa, kabar baik, dan kesempatan untuk semua rencana yang sedang kamu jaga pelan-pelan. Apa pun yang kamu kejar, cinta, jiwa, dan ragaku ku ada di sampingmu. Ingat itu ya tuyycan:)"
     "Maaf atas segala dosa yang kuperbuat dan menyakitimu selama ini. Terimakasih atas kesempatan yang telah diberikan kembali. Akan ku jaga dirimu, akan ku pegang janjiku padamu."
   ],
 
@@ -37,13 +37,11 @@ var KONFIG = {
   PLACEHOLDER_BALASAN: "Tulis di sini, boleh dikosongkan",
   TEKS_TOMBOL_WA: "Kirim ke Brian lewat WhatsApp",
 
-  // Video. Taruh file mp4 sejajar dengan index.html. Tombolnya hanya muncul kalau file videonya ada.
-  // Kosongkan VIDEO ("") kalau tidak mau ada video.
-  VIDEO: "video.mp4",
+  // Video lewat link Google Drive (atau link lain). Tempel linknya di LINK_VIDEO.
+  // Di Google Drive: klik kanan videonya, Bagikan, ubah akses jadi "Siapa saja yang memiliki link", lalu salin link.
+  // Kosongkan ("") kalau tidak mau ada tombol video.
+  LINK_VIDEO: "https://drive.google.com/file/d/1vTXpw0-jS5YlxDFrhY0BYQgq5Prmzb6e/view?usp=sharing",
   TEKS_TOMBOL_VIDEO: "Ada satu hal lagi untukmu",
-  KECIL_VIDEO: "Untuk Dita",
-  JUDUL_VIDEO: "Video dari Brian",
-  TEKS_KEMBALI: "Kembali ke surat",
 
   // Foto latar. Taruh di folder foto dengan nama 1, 2, 3 dan seterusnya.
   // Ekstensi jpg, jpeg, png, dan webp dikenali otomatis. Penomoran harus urut tanpa lompat.
@@ -150,7 +148,7 @@ var KONFIG = {
     // Musik mulai pada sentuhan pertama, dan berhenti menunggu sentuhan setelah benar-benar bunyi.
     var pemicu = ["click", "touchend", "keydown"];
     var mulaiPertama = function (e) {
-      if (tombolMusik.contains(e.target) || document.body.classList.contains("di-video")) return;
+      if (tombolMusik.contains(e.target)) return;
       if (dijedaManual || !musik.paused) return;
       mainkan();
     };
@@ -168,47 +166,26 @@ var KONFIG = {
     });
   }
 
-  /* ---------- video ---------- */
-  var video = $("video");
+  /* ---------- tombol video (link Google Drive) ---------- */
   var tombolVideo = $("tombol-video");
   var musikSebelumVideo = false;
-  var gulirSurat = 0;
 
-  if (KONFIG.VIDEO) {
-    $("kecil-video").textContent = KONFIG.KECIL_VIDEO;
-    $("judul-video").textContent = KONFIG.JUDUL_VIDEO;
-    $("kembali-video").textContent = KONFIG.TEKS_KEMBALI;
+  if (KONFIG.LINK_VIDEO) {
     tombolVideo.textContent = KONFIG.TEKS_TOMBOL_VIDEO;
-    // Tombol selalu muncul kalau VIDEO diisi. Kalau file tidak ada atau formatnya tidak bisa
-    // diputar, pesan penjelasan tampil di halaman video.
     tombolVideo.hidden = false;
-    var galatVideo = document.createElement("p");
-    galatVideo.className = "galat";
-    galatVideo.hidden = true;
-    galatVideo.textContent = "Videonya belum bisa dimuat. Pastikan file " + KONFIG.VIDEO + " ada dan berformat MP4 H.264.";
-    video.parentNode.insertBefore(galatVideo, video.nextSibling);
-    video.addEventListener("error", function () { galatVideo.hidden = false; });
-    video.addEventListener("loadeddata", function () { galatVideo.hidden = true; });
-    video.src = KONFIG.VIDEO;
+    tombolVideo.addEventListener("click", function () {
+      musikSebelumVideo = !!(KONFIG.MUSIK && !musik.paused);
+      if (musikSebelumVideo) musik.pause();   // supaya tidak bertabrakan dengan suara video
+      window.open(KONFIG.LINK_VIDEO, "_blank", "noopener");
+    });
+    // musik menyala lagi saat Dita kembali ke halaman ini
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible" && musikSebelumVideo && !dijedaManual) {
+        musikSebelumVideo = false;
+        mainkan();
+      }
+    });
   }
-
-  tombolVideo.addEventListener("click", function () {
-    gulirSurat = $("halaman-ucapan").scrollTop;
-    musikSebelumVideo = !!(KONFIG.MUSIK && !musik.paused);
-    if (musikSebelumVideo) musik.pause();
-    $("balon").innerHTML = "";   // balon yang masih terbang tidak boleh menutupi video
-    document.body.classList.add("di-video");
-    pindah("video");
-  });
-
-  $("kembali-video").addEventListener("click", function () {
-    video.pause();
-    document.body.classList.remove("di-video");
-    pindah("ucapan");
-    $("halaman-ucapan").scrollTop = gulirSurat;
-    if (musikSebelumVideo && !dijedaManual) mainkan();
-    musikSebelumVideo = false;
-  });
 
   /* ---------- pindah halaman ---------- */
   function pindah(id) {
